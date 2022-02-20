@@ -283,9 +283,7 @@ d
 #Os pressupostos básicos da análise de variância são:
   
 # As amostras são aleatórias e independentes;
-
 # As populações têm distribuição normal; e
-
 # As variâncias populacionais são iguais.
 
 #Verificar a homogeneidade das variâncias
@@ -296,6 +294,145 @@ trat
 bartlett.test(d ~ trat)
 # p-value = 0.8009 > 5%, admitimos que as variancias são homogeneas
 
+
+#Verificar a normalidade da amostra
+
 shapiro.test(Atlanta) #p-value = 0.3479 > 5%, (normalidade)
 shapiro.test(Dallas) #p-value = 0.4756 > 5%, (normalidade)
 shapiro.test(Seatle) #p-value = 0.8819 > 5%, (normalidade)
+
+
+
+#Elaborar o quadro de Análise de Variação
+
+tab12 <- aov(Atlanta ~ Dallas)
+anova(tab12)  #Pr(>F) = 0.3316 = 33,16% > 5% (as notas não diferem umas das outras)
+# de atlanta e dallas
+#TukeyHSD(tab12)
+
+tab12 <- aov(Atlanta ~ Seatle)
+anova(tab12) #Pr(>F) = 0.09272 = 9,272% > 5%
+#(as notas não diferem umas das outras, (Atlanta e Seatle))
+
+tab12 <- aov(Dallas ~ Seatle)
+anova(tab12) #Pr(>F) = 0.7883 = 78,83% > 5%
+#(as notas não diferem umas das outras, (Dallas e Seatle))
+
+##CONCLUSAO
+#o conhecimento em gerenciamento de qualidade é igual nas três fábricas.
+
+
+############ 13 questão #############
+#Deseja-se testar se existem diferenças na quantidade de jacarés em três locais do
+#pantanal mato-grossense.
+
+#▪ L1: 13, 11, 14, 12, 12, 10, 10, 15, 10, 13, 11, 12, 11, 10, 14
+#▪ L2: 9, 10, 9, 7, 8, 10, 11, 11, 7, 8, 7, 11, 11, 8, 6
+#▪ L3: 17, 15, 20, 19, 17, 18, 17, 18, 19, 21, 15, 15, 19, 15, 17
+
+#Verificar a homogeneidade das variâncias, a normalidade da amostra e elaborar o
+#quadro de Análise de Variação, interpretar os resultados. Considere um nível de
+#significância de 1%.
+
+#Verificar a homogeneidade das variâncias
+
+L1 <- c(13, 11, 14, 12, 12, 10, 10, 15, 10, 13, 11, 12, 11, 10, 14)
+L2 <- c(9, 10, 9, 7, 8, 10, 11, 11, 7, 8, 7, 11, 11, 8, 6)
+L3 <- c(17, 15, 20, 19, 17, 18, 17, 18, 19, 21, 15, 15, 19, 15, 17)
+
+d <- c()
+
+ind = 1
+ind2 = 1
+for (i in L1)
+{
+  d[ind] = i
+  d[ind+1] = L2[ind2]
+  d[ind+2] = L3[ind2]
+  ind = ind + 3
+  ind2 = ind2 + 1
+}
+d
+
+trat = factor(rep(1:3, times = 15), label = c("A", "B", "C"))
+trat
+
+bartlett.test(d ~ trat)
+# p-value = 0.35803 > 1%, admitimos que as variancias são homogeneas
+
+
+
+#Verificar a normalidade da amostra
+
+shapiro.test(L1) #p-value = 0.1366 > 1%, (normalidade)
+shapiro.test(L2) #p-value = 0.1034 > 1%, (normalidade)
+shapiro.test(L3) #p-value = 0.1846 > 1%, (normalidade)
+
+
+
+#Elaborar o quadro de Análise de Variação
+
+tab12 <- aov(L1 ~ L2)
+anova(tab12)  #Pr(>F) = 0.8398 = 83,98% > 5%
+#(as quantidades não diferem umas das outras) (de L1 e L2)
+
+tab12 <- aov(L1 ~ L3)
+anova(tab12) #Pr(>F) = 0.2522 = 25,22% > 5%
+#(as quantidades não diferem umas das outras) (de L1 e L3)
+
+tab12 <- aov(L2 ~ L3)
+anova(tab12) #Pr(>F) = 0.7564 = 75,64% > 5%
+#(as quantidades não diferem umas das outras) (de L2 e L3)
+
+##CONCLUSAO
+#não existem diferenças na quantidade de jacarés em três locais do
+#pantanal mato-grossense.
+
+
+############ 14 questão #############
+#Um pesquisador deseja verificar se um instrumento para medir a concentração de
+#determinada substância no sangue está bem calibrado. Para isto, ele tomou 15
+#amostras de concentrações conhecidas (X) e determinou a respectiva concentração
+#através do instrumento (Y), obtendo:
+
+#X 2,0 2,0 2,0 4,0 4,0 4,0 6,0 6,0 6,0 8,0 8,0 8,0 10,0 10,0 10,0
+#Y 2,1 1,8 1,9 4,5 4,2 4,0 6,2 6,0 6,5 8,2 7,8 7,7 9,6 10,0 10,1
+
+X <- c(2.0, 2.0, 2.0, 4.0, 4.0, 4.0, 6.0, 6.0, 6.0, 8.0, 8.0, 8.0, 10.0, 10.0, 10.0)
+Y <- c(2.1, 1.8, 1.9, 4.5, 4.2, 4.0, 6.2, 6.0, 6.5, 8.2, 7.8, 7.7, 9.6, 10.0, 10.1)
+
+Reg <- data.frame(USO = X, CONCENTRAÇÃO = Y)
+Reg
+
+plot(Reg)
+abline(regressao, col = "red")
+
+#Calcular.
+#a) Coeficiente de Correlação e de determinação;
+
+#Hipotese 0: não há correlação
+#hipotese 1: há correlação
+
+cor(X, Y) #0.9960838 (99,6% forte correlação) (<<<<<< coeficiente de correlação)
+cor.test(X, Y, method = "pearson") #p-value = 4.394e-15 < 1%
+
+#concluindo que há correlação entre X e Y já que p valor < 1%, ou ainda,
+#existe uma correlação positiva entre X e Y, e que as
+#variáveis são diretamente proporcionais.
+
+regressao = lm(X ~ Y)
+regressao  # y = 1.0124x -0.1151
+
+summary(regressao)
+#Adjusted R-squared:  0.9916  << coeficiente de determinação
+
+
+#b) Equação da reta;
+regressao  # y = 1.0124x -0.1151
+
+#c) As estimativas dos valores de y para x= 5 e x=12.
+predict(regressao)
+est1 = regressao$coefficients[1] + regressao$coefficients[2]*5
+est2 = regressao$coefficients[1] + regressao$coefficients[2]*12
+est1 #4.947071
+est2 #12.03409
