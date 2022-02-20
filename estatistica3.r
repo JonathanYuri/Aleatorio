@@ -436,3 +436,38 @@ est1 = regressao$coefficients[1] + regressao$coefficients[2]*5
 est2 = regressao$coefficients[1] + regressao$coefficients[2]*12
 est1 #4.947071
 est2 #12.03409
+
+
+############ 15 questão #############
+
+#x  y
+#14 28
+#18 30
+#40 45
+#41 50
+#50 56
+#92 94
+
+x <- c(14, 18, 40, 41, 50, 92)
+y <- c(28, 30, 45, 50, 56, 94)
+
+regressao = lm(x ~ y)
+summary(regressao)
+#d) Coeficiente de Correlação e de determinação;
+
+#Adjusted R-squared:  0.9923  << coeficiente de determinação
+cor(x, y) #0.9969013 (99,6% forte correlação) (<<<<<< coeficiente de correlação)
+
+#e) Equação da reta;
+
+regressao
+# y = 1.164x -16.295
+
+#Calcular:
+#f) Elaborar o teste de hipótese e interpretar usando p-value.
+
+cor.test(x, y, method = "pearson") #p-value = 1.439e-05 < 1%
+
+#concluindo que há correlação entre x e y já que p valor < 1%, ou ainda,
+#existe uma correlação positiva entre x e y, e que as
+#variáveis são diretamente proporcionais.
