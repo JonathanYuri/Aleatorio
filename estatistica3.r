@@ -107,8 +107,7 @@ liber = 15 - 1
 #(teste de hipótese para dados pareados)
 
 b <- c(125, 124, 125, 125, 125, 125, 124, 123, 122, 123, 123, 123, 123, 124, 124)
-mediaATUAL <- mean(b)
-mediaANTERIORES <- 127
+t.test(b, mu = 127) #p-value = 7.155e-09 < 5% (a média foi diferente)
 
 ############ 7 questão #############
 
