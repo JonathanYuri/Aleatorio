@@ -132,22 +132,6 @@ nota <- c(776, 791, 786, 758, 776, 790, 797, 790, 792, 770, 794, 794, 790, 806,
           825, 806, 803, 790, 798, 788, 811, 799, 792, 804, 795, 800)
 
 d <- data.frame(Regiao = regiao, Nota = nota)
-d
-
-vetor <- c()
-ind = 1
-ind2 = 1
-for (i in regiao)
-{
-  vetor[ind] = i
-  vetor[ind+1] = nota[ind2]
-  ind = ind + 2
-  ind2 = ind2 + 1
-}
-vetor
-
-trat = factor(rep(1:2, times = 40), label = c("A", "B"))
-trat
 
 #Calcular:
 #a) Verificar e interpretar a homogeneidade das variâncias das regiões;
